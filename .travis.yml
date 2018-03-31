@@ -48,6 +48,14 @@ os:
   - osx
 
 before_install:
+    - |
+      # Travis won't install GHC and Cabal for us on OS X
+      echo "TRAVIS_OS_NAME=$TRAVIS_OS_NAME"
+      if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+        brew tap caskroom/cask
+        brew cask install haskell-platform
+      fi
+
     # put llvm-3.5 at the front of the path, ahead of any llvm-3.4
     - export PATH=/usr/lib/llvm-3.5/bin:$PATH
     # put ghc and cabal on the path
@@ -59,12 +67,6 @@ before_install:
 # cabal install was unhappy when all deps were specified, so we install them
 # one-by-one in the right order
 install:
-    - |
-      echo "TRAVIS_OS_NAME=$TRAVIS_OS_NAME"
-      if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-        brew tap caskroom/cask
-        brew cask install haskell-platform
-      fi
     - cabal install mtl parsec random stm text wl-pprint compact
     - cabal install buildbox inchworm shimmer
 
