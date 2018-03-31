@@ -1,0 +1,11 @@
+
+module Main
+import System.Posix.Errno
+import System.IO.Console
+where
+
+eCONNREFUSED : Int = 111i
+
+-- Test exception handler throwing an exception.
+main ()
+ = writel (errno_showMessage eCONNREFUSED)
