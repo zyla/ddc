@@ -49,8 +49,7 @@ os:
 
 before_install:
     - |
-      # Travis won't install GHC and Cabal for us on OS X
-      echo "TRAVIS_OS_NAME=$TRAVIS_OS_NAME"
+      # osx: Install GHC and Cabal
       if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
         brew tap caskroom/cask
         brew cask install haskell-platform
@@ -62,11 +61,17 @@ before_install:
     - export PATH=/opt/ghc/8.2.1/bin:/opt/cabal/1.24/bin:$PATH
     - cabal update
 
-# here we manually install all the needed deps
-# by default travis would run `cabal install --only-dependencies --enable-tests`
-# cabal install was unhappy when all deps were specified, so we install them
-# one-by-one in the right order
 install:
+    - |
+      # osx: Cabal sandbox is needed, because we use Haskell Platform
+      if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+        cabal sandbox init
+      fi
+
+    # here we manually install all the needed deps
+    # by default travis would run `cabal install --only-dependencies --enable-tests`
+    # cabal install was unhappy when all deps were specified, so we install them
+    # one-by-one in the right order
     - cabal install mtl parsec random stm text wl-pprint compact
     - cabal install buildbox inchworm shimmer
 
