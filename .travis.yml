@@ -44,7 +44,7 @@ addons:
             - cabal-install-1.24
 
 os:
-  - linux
+  #  - linux
   - osx
 
 before_install:
@@ -60,6 +60,7 @@ before_install:
 # one-by-one in the right order
 install:
     - |
+      echo "TRAVIS_OS_NAME=$TRAVIS_OS_NAME"
       if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
         brew tap caskroom/cask
         brew cask install haskell-platform
