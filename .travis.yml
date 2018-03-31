@@ -59,7 +59,11 @@ before_install:
 # cabal install was unhappy when all deps were specified, so we install them
 # one-by-one in the right order
 install:
-    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew cask install haskell-platform; fi
+    - |
+      if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+        brew tap caskroom/cask
+        brew cask install haskell-platform
+      fi
     - cabal install mtl parsec random stm text wl-pprint compact
     - cabal install buildbox inchworm shimmer
 
