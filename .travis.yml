@@ -43,6 +43,10 @@ addons:
             - ghc-8.2.1
             - cabal-install-1.24
 
+os:
+  - linux
+  - osx
+
 before_install:
     # put llvm-3.5 at the front of the path, ahead of any llvm-3.4
     - export PATH=/usr/lib/llvm-3.5/bin:$PATH
@@ -50,15 +54,12 @@ before_install:
     - export PATH=/opt/ghc/8.2.1/bin:/opt/cabal/1.24/bin:$PATH
     - cabal update
 
-os:
-  - linux
-  - osx
-
 # here we manually install all the needed deps
 # by default travis would run `cabal install --only-dependencies --enable-tests`
 # cabal install was unhappy when all deps were specified, so we install them
 # one-by-one in the right order
 install:
+    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew cask install haskell-platform; fi
     - cabal install mtl parsec random stm text wl-pprint compact
     - cabal install buildbox inchworm shimmer
 
