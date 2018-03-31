@@ -1,0 +1,6 @@
+BUILDFLAVOUR	= devel
+STACK   = stack --resolver lts-11.2
+GHC     = $(STACK) ghc --
+GHCI    = $(STACK) ghci --
+HADDOCK = $(STACK) exec haddock --
+DEPS_INSTALLER = $(STACK)

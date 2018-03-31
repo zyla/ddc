@@ -48,16 +48,8 @@ before_install:
     - export PATH=/usr/lib/llvm-3.5/bin:$PATH
     # Install Stack
     - curl -sSL https://get.haskellstack.org/ | sh
-    - |
-      # Configure the build to use Stack
-      cat > make/config-override.mk <<EOF
-      BUILDFLAVOUR	= devel
-      STACK   = stack --resolver lts-11.2
-      GHC     = $(STACK) ghc --
-      GHCI    = $(STACK) ghci --
-      HADDOCK = $(STACK) exec haddock --
-      DEPS_INSTALLER = $(STACK)
-      EOF
+    # Configure the build to use Stack
+    - cp make/config-override.mk.example-stack make/config-override.mk
 
 install:
     - make setup
