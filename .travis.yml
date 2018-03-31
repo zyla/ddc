@@ -51,7 +51,6 @@ before_install:
     - |
       # osx: Install GHC and Cabal
       if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-        brew tap caskroom/cask
         brew cask install haskell-platform
       fi
 
