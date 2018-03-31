@@ -50,6 +50,10 @@ before_install:
     - export PATH=/opt/ghc/8.2.1/bin:/opt/cabal/1.24/bin:$PATH
     - cabal update
 
+os:
+  - linux
+  - osx
+
 # here we manually install all the needed deps
 # by default travis would run `cabal install --only-dependencies --enable-tests`
 # cabal install was unhappy when all deps were specified, so we install them
